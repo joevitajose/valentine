@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Be My Valentine ❤️</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Segoe UI", sans-serif;
+        background: #ffe6ea;
+        overflow: hidden;
+      }
+
+      .card {
+        background: white;
+        padding: 2rem;
+        border-radius: 18px;
+        text-align: center;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        max-width: 360px;
+        width: 90%;
+        position: relative;
+      }
+
+      h1 {
+        color: #e63946;
+        margin-bottom: 1.5rem;
+      }
+
+      button {
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 0 0.5rem;
+        transition: transform 0.4s ease;
+      }
+
+      #yesBtn {
+        background: #e63946;
+        color: white;
+      }
+
+      #noBtn {
+        background: #ddd;
+        color: #333;
+        position: relative;
+      }
+
+      /* Envelope */
+      .envelope {
+        position: relative;
+        width: 260px;
+        height: 180px;
+        margin: 2rem auto 0;
+        background: #e63946;
+        border-radius: 0 0 14px 14px;
+        overflow: visible;
+      }
+
+      .envelope::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        border-left: 130px solid transparent;
+        border-right: 130px solid transparent;
+        border-top: 90px solid #ffb3c1;
+        transform-origin: top;
+        transition: transform 0.8s ease;
+        z-index: 2;
+      }
+
+      .envelope.open::before {
+        transform: rotateX(180deg);
+      }
+
+      .photo {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 120%) scale(0.4);
+        width: 90vw;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 18px;
+        transition: transform 1s ease;
+        z-index: 5;
+      }
+
+      .photo.show {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card" id="card">
+      <h1>Will you be my Valentine? ❤️</h1>
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+
+    <script>
+      const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
+      const card = document.getElementById("card");
+
+      let noCount = 0;
+
+      noBtn.addEventListener("click", () => {
+        if (noCount < 2) {
+          const direction = noCount % 2 === 0 ? -120 : 120;
+          noBtn.style.transform = `translateX(${direction}px)`;
+          noCount++;
+        } else {
+          noBtn.textContent = "Try again 😌";
+          noBtn.disabled = true;
+        }
+      });
+
+      yesBtn.addEventListener("click", () => {
+        card.innerHTML = `
+        <h1>For you 💌</h1>
+        <div class="envelope open"></div>
+      `;
+
+        const img = document.createElement("img");
+        img.src = "us.jpg";
+        img.className = "photo";
+        document.body.appendChild(img);
+
+        setTimeout(() => {
+          img.classList.add("show");
+        }, 300);
+      });
+    </script>
+  </body>
+</html>
